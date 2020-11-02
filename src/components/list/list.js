@@ -1,4 +1,7 @@
 import React from 'react'
+import ResetButton from './resetButton'
+import AddButton from './addButton'
+import InputField from './inputField'
 
 class List extends React.Component {
     constructor() {
@@ -6,11 +9,13 @@ class List extends React.Component {
         this.state = {
             inputValue: "write some text",
             initialList: ["Vita", "Oleg", "Zirka", "Sasha"],
+            doneList: [],
         }
         this.handleInputChange = this.handleInputChange.bind(this) 
         this.handleAddItemToList = this.handleAddItemToList.bind(this) 
         this.handleResetList = this.handleResetList.bind(this) 
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
+        this.handleItemDone = this.handleItemDone.bind(this)
     }
 
 
@@ -27,7 +32,7 @@ class List extends React.Component {
             state => {
                 const newList = [...this.state.initialList, this.state.inputValue]
                 return{
-                    inputValue: "new",
+                    inputValue: "",
                     initialList: newList,
                 }
             }
@@ -35,55 +40,67 @@ class List extends React.Component {
         
     }
     handleRenderList() {
+        
+        console.log(this.state.initialList)
+        console.log(this.state.doneList)
         const list = this.state.initialList.map( 
-                (i,index) => (
+                (i,index) =>  this.state.doneList.includes(i) ? (
                     <li key={index}>
                         {i} 
+                        <button id={index} onClick={this.handleItemDone}>Продовжити</button> 
                         <button id={index} onClick={this.handleDeleteItem}>Видалити</button> 
-                    </li>
-                )
+                        </li>
+                    ) : (
+                        <li key={index}>
+                        {i} 
+                        <button id={index} onClick={this.handleItemDone}>Зроблено</button> 
+                        <button id={index} onClick={this.handleDeleteItem}>Видалити</button> 
+                        </li>
+                    )
         );
-        return(
-            list
+        return(list)
+    }
+    handleItemDone(e) {
+        this.setState(
+            state => {
+                const done = this.state.initialList.filter( (i,index) => index == e.target.id)
+                console.log(done, 'done');
+                
+            return{doneList:done}
+            }
         )
     }
     handleDeleteItem(e) {
-        console.log(e.target.id);
-        console.log(this.state.initialList);
-        
         this.setState(
-                state => {
-                const newList = this.state.initialList.filter( (i,index) => index != e.target.id)
-                console.log(newList);
+            state => {
+            const newList = this.state.initialList.filter( (i,index) => index != e.target.id)
                 return{
-                    inputValue: "hei",
+                    inputValue: this.state.inputValue,
                     initialList: newList,
                 }
             }
         )
-        
-        
-        
     }
-
     handleResetList() {
-        this.setState({
-            initialList: []
-        })
+            this.setState({
+                initialList: [],
+                inputValue: "",
+            })
     }
+    
 
 
     render() {
 
         return(
             <>
-                <button onClick={this.handleResetList}>Очистити все</button>            
-                <input 
-                    type='text'
+                <ResetButton handleResetList={this.handleResetList} />   
+                <InputField 
                     value={this.state.inputValue}
                     onChange={this.handleInputChange}
-                />
-                <button onClick={this.handleAddItemToList}>Додати</button>
+                />        
+                
+                <AddButton handleAddItemToList={this.handleAddItemToList} />
                 {this.handleRenderList()}
             </>
         )
