@@ -103,14 +103,26 @@ class List extends React.Component {
             }
         )
     }
+    // handleItemDone(e) {
+    //     this.setState(
+    //         state => ({
+    //             state.list.forEach( i => {
+    //                 (i.id == e.target.id) ? (!i.completed) : (i.completed);
+    //                 })     
+    //             )
+    //             })
+    //     )
+    // }
     handleItemDone(e) {
+        console.log(e.target.id);
+        
         this.setState(
-            state => {
-                this.state.list.forEach( i => {
-                    (i.id == e.target.id) ? (!i.completed) : (i.completed);
-                    }     
-                )
-            }
+            state => ({ list: state.list.map(
+                i => (
+                    { ...i, completed: (i.id === e.target.id) ? !i.completed : i.completed }
+                    )
+                                            )
+            })
         )
     }
     handleResetList() {
