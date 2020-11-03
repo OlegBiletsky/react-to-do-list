@@ -107,7 +107,7 @@ class List extends React.Component {
         this.setState(
             state => {
                 this.state.list.forEach( i => {
-                    i.id == e.target.id ? i.completed=!i.completed : i.completed;
+                    (i.id == e.target.id) ? (!i.completed) : (i.completed);
                     }     
                 )
             }
