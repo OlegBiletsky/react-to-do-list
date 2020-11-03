@@ -50,6 +50,7 @@ class List extends React.Component {
         this.handleResetList = this.handleResetList.bind(this) 
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
         this.handleItemDone = this.handleItemDone.bind(this)
+        this.handleEditItem = this.handleEditItem.bind(this)
     }
 
     handleInputChange(e) {
@@ -78,20 +79,29 @@ class List extends React.Component {
         );
     }
     handleRenderList() {
+        
         const visibleList = this.state.list.map(
                     (i) => (
-                            <li>
-                                {i.completed ? <u>{i.text}</u> : i.text}
+                            <li key={uuidv4()}>
+                                {i.completed ? <strike>{i.text}</strike> : i.text}
 
 
-                                <button id={i.id} onClick={this.handleItemDone}>{i.completed ? "Продовжити" : "Зроблено"}</button> 
+                                <button id={i.id} onClick={this.handleItemDone}>{i.completed ? "Ще виконую" : "Зроблено"}</button> 
 
                                 <button id={i.id} onClick={this.handleDeleteItem}>Видалити</button> 
+
+                                <button id={i.id} onClick={this.handleEditItem}>Редагувати</button> 
                             </li>
                         )
         );
         return(visibleList)
     }
+
+    handleEditItem(e) {
+        console.log(e.target.id);
+         
+    }
+
     handleDeleteItem(e) {
         this.setState(
             state => {
@@ -103,7 +113,7 @@ class List extends React.Component {
         )
     }
     handleItemDone(e) {
-        console.log(e.target.id, "e.target.id", typeof(e.target.id) );
+        // console.log(e.target.id, "e.target.id", typeof(e.target.id) );
         this.setState(
             state => ({ list: state.list.map(
                 i => (
@@ -134,7 +144,7 @@ class List extends React.Component {
                 </form>
                  
                 <button onClick={this.handleAddItemToList}>Додати</button>
-
+                
                 {this.handleRenderList()}
             </>
         )
