@@ -93,7 +93,7 @@ class List extends React.Component {//загальний клас List
 
     handleDeleteItem(id) {//видаляємо айтем по id
         this.setState( (state) => {
-            const newList = state.list.filter( (item) => (item.id) != id );
+            const newList = state.list.filter( (item) => (item.id) !== id );
             return{
                     list: newList
                 };
