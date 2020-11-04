@@ -1,39 +1,39 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';//бібліотека унікальних id
 import ListItem from './listItem';
 
-class List extends React.Component {//загальний клас List
+class List extends React.Component {//загальний class-component List
     constructor() {
         super();
         this.state = {
-            currentItem: {//текущий айтем
-                text: "",//пусте поле вводу
-                id: uuidv4(),//обовязково щоб не було баги з пустим рядком
-                completed: false,//не виконаний!
-                editing: false,//не редагується зараз!
+            currentItem: {//текущий айтем, він будує всі інші
+                text: "",//пусте поле вводу, значення відображається в інпуті
+                id: uuidv4(),//обовязково!-щоб не було баги з пустим рядком коли додаємо айтеми без тексту, а так інпут без тексту вже на старті має id
+                completed: false,//не виконаний айтем!
+                editing: false,//айтем зараз не редагується!
             },
-            list: [//ліст де будуть наші айтеми
+            list: [//ліст де будуть будуватись наші айтеми
                 {
                     text: "Learn React",
-                    id: 1,
+                    id: 10,
                     completed: false,
                     editing: false,
                 },
                 {
                     text: "Repeat JS",
-                    id: 2,
+                    id: 20,
                     completed: false,
-                    editing: true,
+                    editing: false,
                 },
                 {
                     text: "Read in English",
-                    id: 5,
+                    id: 30,
                     completed: false,
                     editing: false,
                 },
                 {
                     text: "Create project",
-                    id: 6,
+                    id: 40,
                     completed: false,
                     editing: false,
                 },
@@ -43,16 +43,16 @@ class List extends React.Component {//загальний клас List
         this.handleInputChange = this.handleInputChange.bind(this) 
         this.handleAddItemToList = this.handleAddItemToList.bind(this) 
         this.handleResetList = this.handleResetList.bind(this) 
+        this.handleEditItem = this.handleEditItem.bind(this)
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
         this.handleItemDone = this.handleItemDone.bind(this)
-        this.handleEditItem = this.handleEditItem.bind(this)
     }
 
     handleInputChange(e) {
             this.setState({
                 currentItem: {
-                    text: e.target.value,//відображає в інпут онлайн
-                    id: uuidv4(),//бібліотека унікальних id
+                    text: e.target.value,//відображається в інпуті онлайн
+                    id: uuidv4(),
                     completed: false,
                     editing: false,
                 }                    
@@ -63,34 +63,29 @@ class List extends React.Component {//загальний клас List
         this.setState( (state) => {
             const newList = [...state.list, state.currentItem];
             return{
-                currentItem:{
+                currentItem:{//очистка вводу
                     text: "",
-                    id: uuidv4(),//обовязково щоб не було баги з пустим рядком
+                    id: uuidv4(),
                     completed: false,
                     editing: false,
                 },
-                list: newList
+                list: newList//лісту присвоюємо новий ліст
             };
         });
     };
-    handleResetList() {//очищаємо все
+    handleResetList() {//очищаємо все!
         this.setState({
             list: []
         });
     };
-    handleEditItem = (id, text) => {//редагуємо айтем з id та text
+    handleEditItem = (id, text) => {//редагуємо айтем з пропсами: id та новим текстом - text
         this.setState((state) => ({
-          list: state.list.map((item) =>
-            item.id !== id
-              ? item
-              : {
-                  ...item,
-                  text: text
-                }
-          )
-        }));
+            list: state.list.map((item) =>
+                item.id !== id ? item : 
+                    {...item, text: text}
+            )
+        }));//!what about editing flag??
     }; 
-
     handleDeleteItem(id) {//видаляємо айтем по id
         this.setState( (state) => {
             const newList = state.list.filter( (item) => (item.id) !== id );
@@ -101,14 +96,9 @@ class List extends React.Component {//загальний клас List
     }
     handleItemDone(id) {//позначаємо виконаними по id
         this.setState((state) => ({ 
-            list: state.list.map(
-                (item) =>
-                item.id !== id
-                  ? item
-                  : {
-                      ...item,
-                      completed: !item.completed
-                    }
+            list: state.list.map((item) =>
+                item.id !== id ? item : 
+                    {...item, completed: !item.completed}
             )
         }));
     };
