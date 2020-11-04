@@ -10,37 +10,44 @@ class List extends React.Component {
                             text: "",
                             id: uuidv4(),//обовязково щоб не було баги з пустим рядком
                             completed: false,
+                            editing: false,
                         },
             list: [
             {
                 text: "Vita",
                 id: 1,
                 completed: false,
+                editing: false,
             },
             {
                 text: "Oleh",
                 id: 2,
                 completed: false,
+                editing: true,
             },
             {
                 text: "sasa",
                 id: 3,
                 completed: false,
+                editing: false,
             },
             {
                 text: "zirka",
                 id: 4,
                 completed: false,
+                editing: true,
             },
             {
                 text: "papa",
                 id: 5,
                 completed: false,
+                editing: false,
             },
             {
                 text: "mama",
                 id: 6,
                 completed: false,
+                editing: false,
             },
         ],
     }
@@ -50,7 +57,7 @@ class List extends React.Component {
         this.handleResetList = this.handleResetList.bind(this) 
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
         this.handleItemDone = this.handleItemDone.bind(this)
-        this.handleEditItem = this.handleEditItem.bind(this)
+        this.handleEditItemButton = this.handleEditItemButton.bind(this)
     }
 
     handleInputChange(e) {
@@ -59,6 +66,7 @@ class List extends React.Component {
                         text: e.target.value,
                         id: uuidv4(),//бібліотека унікальних id
                         completed: false,
+                        editing: false,
                     }                    
             })
     }
@@ -72,6 +80,7 @@ class List extends React.Component {
                         text: "",
                         id: uuidv4(),//обовязково щоб не було баги з пустим рядком
                         completed: false,
+                        editing: false,
                     },
                     list: newList
                 };
@@ -81,24 +90,51 @@ class List extends React.Component {
     handleRenderList() {
         
         const visibleList = this.state.list.map(
-                    (i) => (
-                            <li key={uuidv4()}>
-                                {i.completed ? <strike>{i.text}</strike> : i.text}
+            
+                    (i) => 
+                    (
+                        (<li key={uuidv4()}>
+
+                            
+
+                            {i.completed ? 
+
+                            <strike>
+                                {
+                                !i.editing ? i.text : <input value={i.text} onChange={console.log(i.text, "yess")
+                                }/>
+                                }
+                            </strike> 
+                                
+                                : 
+
+                                (!i.editing ? i.text : <input value={i.text} onChange={console.log(i.text, "no")} />)
+                            }
 
 
-                                <button id={i.id} onClick={this.handleItemDone}>{i.completed ? "Ще виконую" : "Зроблено"}</button> 
+                            <button id={i.id} onClick={this.handleItemDone}>{i.completed ? "Ще виконую" : "Зроблено"}</button> 
 
-                                <button id={i.id} onClick={this.handleDeleteItem}>Видалити</button> 
+                            <button id={i.id} onClick={this.handleDeleteItem}>Видалити</button> 
 
-                                <button id={i.id} onClick={this.handleEditItem}>Редагувати</button> 
-                            </li>
+                            <button id={i.id} onClick={this.handleEditItemButton}>{!i.editing ? "Редагувати" :"Зберегти" }</button> 
+                        </li>)
                         )
+
         );
         return(visibleList)
     }
 
-    handleEditItem(e) {
+    handleEditItemButton(e) {
         console.log(e.target.id);
+
+        this.setState(
+            state => {
+                const newList = this.state.list.map( i => ({...i, editing: (i.id == e.target.id) ? !i.editing : i.editing}) )
+                return{ list: newList, }
+            }
+        );
+
+
          
     }
 
