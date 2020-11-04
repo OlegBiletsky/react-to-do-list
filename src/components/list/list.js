@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import ListItem from './listItem';
 
 class List extends React.Component {//загальний клас List
     constructor() {
@@ -41,13 +41,11 @@ class List extends React.Component {//загальний клас List
         };
         //байндимо на this наші функції 
         this.handleInputChange = this.handleInputChange.bind(this) 
-        this.handleAddItemToList = this.handleAddItemToList.bind(this)
-        this.handleRenderList = this.handleRenderList.bind(this) 
+        this.handleAddItemToList = this.handleAddItemToList.bind(this) 
         this.handleResetList = this.handleResetList.bind(this) 
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
         this.handleItemDone = this.handleItemDone.bind(this)
         this.handleEditItem = this.handleEditItem.bind(this)
-        this.handleInputEditChange = this.handleInputEditChange.bind(this)
     }
 
     handleInputChange(e) {
