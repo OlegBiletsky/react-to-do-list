@@ -26,18 +26,6 @@ class List extends React.Component {
                 editing: true,
             },
             {
-                text: "sasa",
-                id: 3,
-                completed: false,
-                editing: false,
-            },
-            {
-                text: "zirka",
-                id: 4,
-                completed: false,
-                editing: true,
-            },
-            {
                 text: "papa",
                 id: 5,
                 completed: false,
@@ -58,6 +46,7 @@ class List extends React.Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
         this.handleItemDone = this.handleItemDone.bind(this)
         this.handleEditItemButton = this.handleEditItemButton.bind(this)
+        this.handleInputEditChange = this.handleInputEditChange.bind(this)
     }
 
     handleInputChange(e) {
@@ -101,14 +90,14 @@ class List extends React.Component {
 
                             <strike>
                                 {
-                                !i.editing ? i.text : <input value={i.text} onChange={console.log(i.text, "yess")
+                                !i.editing ? i.text : <input value={i.text} onChange={this.handleInputEditChange
                                 }/>
                                 }
                             </strike> 
                                 
                                 : 
 
-                                (!i.editing ? i.text : <input value={i.text} onChange={console.log(i.text, "no")} />)
+                                (!i.editing ? i.text : <input value={i.text} onChange={this.handleInputEditChange} />)
                             }
 
 
@@ -116,17 +105,24 @@ class List extends React.Component {
 
                             <button id={i.id} onClick={this.handleDeleteItem}>Видалити</button> 
 
-                            <button id={i.id} onClick={this.handleEditItemButton}>{!i.editing ? "Редагувати" :"Зберегти" }</button> 
+                            <button id={i.id} onClick={this.handleEditItemButton}>{!i.editing ? "Редагувати" : "Зберегти" }</button> 
                         </li>)
                         )
 
         );
         return(visibleList)
     }
-
+    handleInputEditChange(e) {
+        console.log('hi')
+        this.setState(
+            state => {
+                const newList = state.list.map( i => ({...i, text: e.target.value}) )
+                return{ list: newList, }
+            }
+        );
+    }
     handleEditItemButton(e) {
-        console.log(e.target.id);
-
+        // console.log(e.target.id);
         this.setState(
             state => {
                 const newList = this.state.list.map( i => ({...i, editing: (i.id == e.target.id) ? !i.editing : i.editing}) )
