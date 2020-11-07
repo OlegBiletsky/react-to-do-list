@@ -19,7 +19,7 @@ class List extends React.Component {//загальний class-component List
         this.handleResetList = this.handleResetList.bind(this) 
         this.handleEditItem = this.handleEditItem.bind(this)
         this.handleDeleteItem = this.handleDeleteItem.bind(this) 
-        this.handleItemDone = this.handleItemDone.bind(this)
+        this.handleChangeCompletedFlag = this.handleChangeCompletedFlag.bind(this)
     }
 
     handleInputChange(e) {
@@ -66,7 +66,7 @@ class List extends React.Component {//загальний class-component List
                 };
         });
     }
-    handleItemDone(id) {//позначаємо виконаними по id
+    handleChangeCompletedFlag(id) {//позначаємо виконаними по id
         this.setState((state) => ({ 
             list: state.list.map((item) =>
                 item.id !== id ? item : 
@@ -95,7 +95,7 @@ class List extends React.Component {//загальний class-component List
                     <ListItem
                         key={item.id}
                         data={item}
-                        handleComplete={this.handleItemDone}
+                        handleComplete={this.handleChangeCompletedFlag}
                         handleSave={this.handleEditItem}
                         handleDelete={this.handleDeleteItem}
                     />

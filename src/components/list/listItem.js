@@ -4,7 +4,7 @@ import React from 'react';
 //     <ListItem
 //         key={item.id}
 //         data={item}
-//         handleComplete={this.handleItemDone}
+//         handleComplete={this.handleChangeCompletedFlag}
 //         handleSave={this.handleEditItem}
 //         handleDelete={this.handleDeleteItem}
 //     />
@@ -13,7 +13,7 @@ class ListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editing: false,
+            editing: false, //стан редагування - false
             text: props.data.text,
         };
     }
@@ -23,7 +23,7 @@ class ListItem extends React.Component {
             data: { id, completed, text },
             handleComplete:handleComplete,
             handleSave:handleSave,
-            handleDelete:handleDelete
+            handleDelete:handleDelete,
         } = this.props;
 
         const onEdit = () => {
@@ -39,18 +39,20 @@ class ListItem extends React.Component {
       
         return (
             <li>
-                {this.state.editing ? 
-                    (<input
-                    value={this.state.text}
-                    onChange={(e) => this.setState({ text: e.target.value })}
+                { 
+                this.state.editing ?  //ми редагуємо чи ні?? editing true or false? за замовчуванням стоїть false
+                    (<input       //якщо true то малюємо такий ІНПУТ
+                    value={this.state.text}  //цей text приходить з айтема в пропсах
+                    onChange={(e) => this.setState({ text: e.target.value })} //реагуємо на тайпання
                     />) 
                 : 
-                completed ? 
-                (<strike>{text}</strike>) : 
-                (text)}
+                completed ? //якщо editing==false, тобто не редагуємо то перевірка чи виконано? (completed: false з пропсів)
+                (<strike>{text}</strike>) : //якщо completed: true, тобто виконано то перекреслюємо
+                (text) //якщо completed: false, то просто text, той що з пропсів
+                }
 
                 <button onClick={() => handleComplete(id)}>
-                {completed ? "Ще виконую" : "Зроблено"}
+                {completed ? "Довиконувати" : "Зроблено"}
                 </button>
 
                 <button onClick={() => handleDelete(id)}>Видалити</button>
