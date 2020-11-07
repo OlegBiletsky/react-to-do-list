@@ -48,7 +48,7 @@ class ListItem extends React.Component {
                 : 
                 completed ? //якщо editing==false, тобто не редагуємо то перевірка чи виконано? (completed: false з пропсів)
                 (<strike>{text}</strike>) : //якщо completed: true, тобто виконано то перекреслюємо
-                (text) //якщо completed: false, то просто text, той що з пропсів
+                (<span onClick={() => onEdit()}>{text}</span>  ) //якщо completed: false, то просто text, той що з пропсів
                 }
 
                 <button onClick={() => handleComplete(id)}>
