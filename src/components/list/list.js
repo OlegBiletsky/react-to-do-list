@@ -28,7 +28,6 @@ class List extends React.Component {//загальний class-component List
                     text: e.target.value,//відображається в інпуті онлайн
                     id: uuidv4(),
                     completed: false,
-                    editing: false,
                 }                    
             });
     };
@@ -41,7 +40,6 @@ class List extends React.Component {//загальний class-component List
                     text: "",
                     id: uuidv4(),
                     completed: false,
-                    editing: false,
                 },
                 list: newList//лісту присвоюємо новий ліст
             };
