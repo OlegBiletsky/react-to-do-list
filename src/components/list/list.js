@@ -10,34 +10,8 @@ class List extends React.Component {//загальний class-component List
                 text: "",//пусте поле вводу, значення відображається в інпуті
                 id: uuidv4(),//обовязково!-щоб не було баги з пустим рядком коли додаємо айтеми без тексту, а так інпут без тексту вже на старті має id
                 completed: false,//не виконаний айтем!
-                // editing: false,//айтем зараз не редагується!
             },
-            list: [//ліст де будуть будуватись наші айтеми
-                {
-                    text: "Learn React",
-                    id: 10,
-                    completed: false,
-                    // editing: false,
-                },
-                {
-                    text: "Repeat JS",
-                    id: 20,
-                    completed: false,
-                    // editing: false,
-                },
-                {
-                    text: "Read in English",
-                    id: 30,
-                    completed: false,
-                    // editing: false,
-                },
-                {
-                    text: "Create project",
-                    id: 40,
-                    completed: false,
-                    // editing: false,
-                },
-            ],
+            list: [],//ліст де будуть будуватись наші айтеми 
         };
         //байндимо на this наші функції 
         this.handleInputChange = this.handleInputChange.bind(this) 
@@ -84,7 +58,7 @@ class List extends React.Component {//загальний class-component List
                 item.id !== id ? item : 
                     {...item, text: text}
             )
-        }));//!what about editing flag??
+        }));
     }; 
     handleDeleteItem(id) {//видаляємо айтем по id
         this.setState( (state) => {
