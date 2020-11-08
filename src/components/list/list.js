@@ -13,20 +13,7 @@ class List extends React.Component {//загальний class-component List
                 id: uuidv4(),//обовязково!-щоб не було баги з пустим рядком коли додаємо айтеми без тексту, а так інпут без тексту вже на старті має id
                 completed: false,//не виконаний айтем!
             },
-            list: [
-                {
-                    text: "Vita",
-                    id: 1,
-                    completed: false,
-                    editing: false
-                },
-                {
-                    text: "Oleh",
-                    id: 2,
-                    completed: false,
-                    editing: true
-                },
-            ]
+            list: []
         };
         //байндимо на this наші функції 
         this.handleInputChange = this.handleInputChange.bind(this) 
