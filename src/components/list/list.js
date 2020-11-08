@@ -1,6 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';//бібліотека унікальних id
-import ListItem from './listItem';
+import ListItem from '../listItem/listItem';
+import './list.css';
+import cn from 'classnames'
 
 class List extends React.Component {//загальний class-component List
     constructor() {
@@ -11,7 +13,20 @@ class List extends React.Component {//загальний class-component List
                 id: uuidv4(),//обовязково!-щоб не було баги з пустим рядком коли додаємо айтеми без тексту, а так інпут без тексту вже на старті має id
                 completed: false,//не виконаний айтем!
             },
-            list: [],//ліст де будуть будуватись наші айтеми 
+            list: [
+                {
+                    text: "Vita",
+                    id: 1,
+                    completed: false,
+                    editing: false
+                },
+                {
+                    text: "Oleh",
+                    id: 2,
+                    completed: false,
+                    editing: true
+                },
+            ]
         };
         //байндимо на this наші функції 
         this.handleInputChange = this.handleInputChange.bind(this) 
@@ -76,20 +91,33 @@ class List extends React.Component {//загальний class-component List
     };
     
     render() {
-        return(
-            <>
-                <button onClick={this.handleResetList}>Очистити все!</button>
+        // let btnClass = cn({
+        //     btn: true,
+        //     btn2: true,
+        //     btn3: true,
+        //     btn4: true,
+        //     btn5: true,
+            // 'btn-pressed': this.state.isPressed,
+            // 'btn-over': !this.state.isPressed && this.state.isHovered
+          //});
+{/* <button className={btnClass}  onClick={this.handleResetList}>Очистити все!</button> */}
 
-                <form onSubmit={this.handleAddItemToList}>
+        return(
+            <div className='main-container'>
+                <button className='reset-button'  onClick={this.handleResetList}>Очистити все!</button>
+
+                <form className='input-form' onSubmit={this.handleAddItemToList} >
                     <input 
                         type='text'
                         placeholder="add new task"
                         value={this.state.currentItem.text}
                         onChange={this.handleInputChange}
+                        className='input-field'
                     />
+                    <button className='add-button' onClick={this.handleAddItemToList}>Додати</button>
                 </form>
                  
-                <button onClick={this.handleAddItemToList}>Додати</button>
+                
                 
                 {this.state.list.map((item) => (//для кожного айтема з ліста малюємо наступне
                     <ListItem
@@ -100,7 +128,7 @@ class List extends React.Component {//загальний class-component List
                         handleDelete={this.handleDeleteItem}
                     />
                 ))}
-            </>
+            </div>
         );
     }
 }

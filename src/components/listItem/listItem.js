@@ -40,15 +40,15 @@ class ListItem extends React.Component {
         return (
             <li>
                 { 
-                this.state.editing ?  //ми редагуємо чи ні?? editing true or false? за замовчуванням стоїть false
-                    (<input       //якщо true то малюємо такий ІНПУТ
-                    value={this.state.text}  //цей text приходить з айтема в пропсах
-                    onChange={(e) => this.setState({ text: e.target.value })} //реагуємо на тайпання
-                    />) 
-                : 
-                completed ? //якщо editing==false, тобто не редагуємо то перевірка чи виконано? (completed: false з пропсів)
-                (<strike>{text}</strike>) : //якщо completed: true, тобто виконано то перекреслюємо
-                (<span onClick={() => onEdit()}>{text}</span>  ) //якщо completed: false, то просто text, той що з пропсів
+                    this.state.editing ?  //ми редагуємо чи ні?? editing true or false? за замовчуванням стоїть false
+                        (<input       //якщо true то малюємо такий ІНПУТ
+                        value={this.state.text}  //цей text приходить з айтема в пропсах
+                        onChange={(e) => this.setState({ text: e.target.value })} //реагуємо на тайпання
+                        />) 
+                    : 
+                    completed ? //якщо editing==false, тобто не редагуємо то перевірка чи виконано? (completed: false з пропсів)
+                    (<strike>{text}</strike>) : //якщо completed: true, тобто виконано то перекреслюємо
+                    (<span onClick={() => onEdit()}>{text}</span>  ) //якщо completed: false, то просто text, той що з пропсів
                 }
 
                 <button onClick={() => handleComplete(id)}>
